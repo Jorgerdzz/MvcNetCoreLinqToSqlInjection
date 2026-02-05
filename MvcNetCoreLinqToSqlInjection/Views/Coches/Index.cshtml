@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Coche
+
+<h1 style="color:rebeccapurple">
+    Marca: @Model.Marca
+</h1>
+<h1 style="color:rebeccapurple">
+    Modelo: @Model.Modelo
+</h1>
+
+<h1 style="color:green">
+    Velocidad actual: @Model.Velocidad
+</h1>
+
+<h1 style="color:red">
+    Velocidad maxima: @Model.VelocidadMaxima
+</h1>
+
+<form method="POST">
+    <button name="accion" value="acelerar" class="btn btn-success">Acelerar</button>
+    <button name="accion" value="frenar" class="btn btn-danger">Frenar</button>
+</form>
+
+
+<img src="~/images/@Model.Imagen" style="width: 350px; height: 300px"/>
