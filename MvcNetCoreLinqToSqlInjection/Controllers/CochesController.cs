@@ -5,9 +5,9 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
 {
     public class CochesController : Controller
     {
-        private Coche coche;
+        private ICoche coche;
 
-        public CochesController(Coche coche)
+        public CochesController(ICoche coche)
         {
             this.coche = coche;
         }
