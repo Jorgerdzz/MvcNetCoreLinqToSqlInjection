@@ -6,9 +6,9 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
 {
     public class DoctoresController : Controller
     {
-        private RepositoryDoctoresOracle repo;
+        private IRepositoryDoctores repo;
 
-        public DoctoresController(RepositoryDoctoresOracle repo)
+        public DoctoresController(IRepositoryDoctores repo)
         {
             this.repo = repo;
         }

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace MvcNetCoreLinqToSqlInjection.Repositories
 {
-    public class RepositoryDoctoresSqlServer
+    public class RepositoryDoctoresSqlServer: IRepositoryDoctores
     {
         private SqlConnection cn;
         private SqlCommand com;

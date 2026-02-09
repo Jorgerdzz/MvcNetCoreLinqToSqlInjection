@@ -5,7 +5,7 @@ using System.Data;
 
 namespace MvcNetCoreLinqToSqlInjection.Repositories
 {
-    public class RepositoryDoctoresOracle
+    public class RepositoryDoctoresOracle: IRepositoryDoctores
     {
         private DataTable tablaDoctor;
         private OracleConnection cn;
