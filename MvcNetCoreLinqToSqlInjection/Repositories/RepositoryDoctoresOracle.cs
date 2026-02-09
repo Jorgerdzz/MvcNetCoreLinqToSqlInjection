@@ -1,7 +1,19 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Data.SqlClient;
 using MvcNetCoreLinqToSqlInjection.Models;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using static Azure.Core.HttpHeader;
+
+#region STORED PROCEDURES
+//create or replace procedure SP_DELETE_DOCTOR
+//(p_iddoctor DOCTOR.DOCTOR_NO%type)
+//AS
+//BEGIN   
+//    delete from DOCTOR where DOCTOR_NO = p_iddoctor;
+//    commit;
+//END;
+#endregion
 
 namespace MvcNetCoreLinqToSqlInjection.Repositories
 {
@@ -58,6 +70,19 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             this.com.Parameters.Add(pamSalario);
 
             this.com.CommandType = CommandType.Text;
+            this.com.CommandText = sql;
+            await this.cn.OpenAsync();
+            await this.com.ExecuteNonQueryAsync();
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+        }
+
+        public async Task DeleteDoctorAsync(int idDoctor)
+        {
+            string sql = "SP_DELETE_DOCTOR";
+            OracleParameter pamIdDoctor = new OracleParameter(":p_iddoctor", idDoctor);
+            this.com.Parameters.Add(pamIdDoctor);
+            this.com.CommandType = CommandType.StoredProcedure;
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
             await this.com.ExecuteNonQueryAsync();

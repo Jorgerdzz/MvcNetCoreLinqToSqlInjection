@@ -59,6 +59,18 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             this.com.Parameters.Clear();
         }
 
+        public async Task DeleteDoctorAsync(int idDoctor)
+        {
+            string sql = "SP_DELETE_DOCTOR";
+            this.com.Parameters.AddWithValue("@idDoctor", idDoctor);
+            this.com.CommandType = CommandType.StoredProcedure;
+            this.com.CommandText = sql;
+            await this.cn.OpenAsync();
+            await this.com.ExecuteNonQueryAsync();
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+        }
+
 
     }
 }

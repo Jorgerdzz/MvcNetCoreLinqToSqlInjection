@@ -30,5 +30,12 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
             await this.repo.InsertDoctor(idDoctor, apellido, especialidad, salario, idHospital);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.repo.DeleteDoctorAsync(id);
+            return RedirectToAction("Index");
+        }
+
     }
 }
