@@ -1,6 +1,24 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Data.SqlClient;
 using MvcNetCoreLinqToSqlInjection.Models;
 using System.Data;
+
+#region STORED PROCEDURES
+//create procedure SP_DELETE_DOCTOR
+//(@idDoctor int)
+//as
+//	delete from DOCTOR where DOCTOR_NO = @idDoctor
+//go
+
+//select * from DOCTOR
+
+//create procedure SP_UPDATE_DOCTOR
+//(@idHospital int, @idDoctor int, @apellido nvarchar(50), @especialidad nvarchar(50), @salario int)
+//as
+//	update DOCTOR set HOSPITAL_COD = @idHospital, APELLIDO = @apellido,
+//    ESPECIALIDAD = @especialidad, SALARIO = @salario WHERE DOCTOR_NO = @idDoctor
+//go
+#endregion
 
 namespace MvcNetCoreLinqToSqlInjection.Repositories
 {
@@ -103,6 +121,27 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             await this.com.ExecuteNonQueryAsync();
             await this.cn.CloseAsync();
             this.com.Parameters.Clear();
+        }
+
+        public List<Doctor> BuscadorDoctores(string especilidad)
+        {
+            var consulta = from datos in this.tablaDoctor.AsEnumerable()
+                           where datos.Field<string>("ESPECIALIDAD") == especilidad
+                           select datos;
+            List<Doctor> doctores = new List<Doctor>();
+            foreach (var row in consulta)
+            {
+                Doctor doctor = new Doctor
+                {
+                    IdDoctor = row.Field<int>("DOCTOR_NO"),
+                    Apellido = row.Field<string>("APELLIDO"),
+                    Especialidad = row.Field<string>("ESPECIALIDAD"),
+                    Salario = row.Field<int>("SALARIO"),
+                    IdHospital = row.Field<int>("HOSPITAL_COD"),
+                };
+                doctores.Add(doctor);
+            }
+            return doctores;
         }
 
     }

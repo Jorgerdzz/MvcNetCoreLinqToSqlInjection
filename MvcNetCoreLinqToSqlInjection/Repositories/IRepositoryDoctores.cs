@@ -14,5 +14,7 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
 
         Task UpdateDoctorAsync(int idHospital, int idDoctor, string apellido, string especialidad, int salario);
 
+        List<Doctor> BuscadorDoctores(string especialidad);
+
     }
 }

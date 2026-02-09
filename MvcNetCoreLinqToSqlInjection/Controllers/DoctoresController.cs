@@ -50,5 +50,18 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Buscador()
+        {
+            List<Doctor> doctores = this.repo.GetDoctores();
+            return View(doctores);
+        }
+
+        [HttpPost]
+        public IActionResult Buscador(string especialidad)
+        {
+            List<Doctor> doctores = this.repo.BuscadorDoctores(especialidad);
+            return View(doctores);
+        }
+
     }
 }

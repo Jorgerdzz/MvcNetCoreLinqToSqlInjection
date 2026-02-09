@@ -11,7 +11,17 @@ using static Azure.Core.HttpHeader;
 //AS
 //BEGIN   
 //    delete from DOCTOR where DOCTOR_NO = p_iddoctor;
-//    commit;
+//commit;
+//END;
+
+//create or replace procedure SP_UPDATE_DOCTOR
+//(p_idhospital DOCTOR.HOSPITAL_COD%type, p_iddoctor DOCTOR.DOCTOR_NO%type, p_apellido DOCTOR.APELLIDO%type, p_especialidad DOCTOR.ESPECIALIDAD%type, p_salario DOCTOR.SALARIO%type)
+//AS
+//BEGIN
+//    update DOCTOR set DOCTOR.HOSPITAL_COD = p_idhospital, DOCTOR.APELLIDO = p_apellido,
+//    DOCTOR.ESPECIALIDAD = p_especialidad, DOCTOR.SALARIO = p_salario
+//    where DOCTOR.DOCTOR_NO = p_iddoctor;
+//commit;
 //END;
 #endregion
 
@@ -127,6 +137,27 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             await this.com.ExecuteNonQueryAsync();
             await this.cn.CloseAsync();
             this.com.Parameters.Clear();
+        }
+
+        public List<Doctor> BuscadorDoctores(string especilidad)
+        {
+            var consulta = from datos in this.tablaDoctor.AsEnumerable()
+                           where datos.Field<string>("ESPECIALIDAD") == especilidad
+                           select datos;
+            List<Doctor> doctores = new List<Doctor>();
+            foreach (var row in consulta)
+            {
+                Doctor doctor = new Doctor
+                {
+                    IdDoctor = row.Field<int>("DOCTOR_NO"),
+                    Apellido = row.Field<string>("APELLIDO"),
+                    Especialidad = row.Field<string>("ESPECIALIDAD"),
+                    Salario = row.Field<int>("SALARIO"),
+                    IdHospital = row.Field<int>("HOSPITAL_COD"),
+                };
+                doctores.Add(doctor);
+            }
+            return doctores;
         }
 
     }
