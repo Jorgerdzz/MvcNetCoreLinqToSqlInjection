@@ -28,6 +28,7 @@
                 <td>@doctor.Salario</td>
                 <td>@doctor.IdHospital</td>
                 <td>
+                    <a class="btn btn-warning" asp-controller="Doctores" asp-action="Update" asp-route-id="@doctor.IdDoctor">Update</a>
                     <a class="btn btn-danger" asp-controller="Doctores" asp-action="Delete" asp-route-id="@doctor.IdDoctor">Delete</a>
                 </td>
             </tr>

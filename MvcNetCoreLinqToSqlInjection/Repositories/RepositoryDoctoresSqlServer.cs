@@ -43,6 +43,24 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             return doctores;
         }
 
+        public Doctor FindDoctorById(int idDoctor)
+        {
+            var consulta = from datos in this.tablaDoctor.AsEnumerable()
+                           where datos.Field<int>("DOCTOR_NO") == idDoctor
+                           select datos;
+            var row = consulta.First();
+            Doctor doctor = new Doctor
+            {
+                IdDoctor = row.Field<int>("DOCTOR_NO"),
+                Apellido = row.Field<string>("APELLIDO"),
+                Especialidad = row.Field<string>("ESPECIALIDAD"),
+                Salario = row.Field<int>("SALARIO"),
+                IdHospital = row.Field<int>("HOSPITAL_COD"),
+            };
+
+            return doctor;
+        }
+
         public async Task InsertDoctor(int idDoctor, string apellido, string especialidad, int salario, int idHospital)
         {
             string sql = "insert into DOCTOR values(@idHospital, @idDoctor, @apellido, @especialidad, @salario)";
@@ -71,6 +89,21 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
             this.com.Parameters.Clear();
         }
 
+        public async Task UpdateDoctorAsync(int idHospital, int idDoctor, string apellido, string especialidad, int salario)
+        {
+            string sql = "SP_UPDATE_DOCTOR";
+            this.com.Parameters.AddWithValue("@idHospital", idHospital);
+            this.com.Parameters.AddWithValue("@idDoctor", idDoctor);
+            this.com.Parameters.AddWithValue("@apellido", apellido);
+            this.com.Parameters.AddWithValue("@especialidad", especialidad);
+            this.com.Parameters.AddWithValue("@salario", salario);
+            this.com.CommandType = CommandType.StoredProcedure;
+            this.com.CommandText = sql;
+            await this.cn.OpenAsync();
+            await this.com.ExecuteNonQueryAsync();
+            await this.cn.CloseAsync();
+            this.com.Parameters.Clear();
+        }
 
     }
 }

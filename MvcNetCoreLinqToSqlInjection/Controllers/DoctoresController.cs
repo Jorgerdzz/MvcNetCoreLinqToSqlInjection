@@ -37,5 +37,18 @@ namespace MvcNetCoreLinqToSqlInjection.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Update(int id)
+        {
+            Doctor doctor = this.repo.FindDoctorById(id);
+            return View(doctor);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int idHospital, int idDoctor, string apellido, string especialidad, int salario)
+        {
+            await this.repo.UpdateDoctorAsync(idHospital, idDoctor, apellido, especialidad, salario);
+            return RedirectToAction("Index");
+        }
+
     }
 }

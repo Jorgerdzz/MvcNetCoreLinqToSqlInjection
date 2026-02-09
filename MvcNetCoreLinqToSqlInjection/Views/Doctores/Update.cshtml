@@ -1,0 +1,22 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Doctor
+
+<h1>Modificar doctor</h1>
+
+<form method="post">
+    <label>Id Hospital</label>
+    <input type="number" name="idhospital" class="form-control" value="@Model.IdHospital"/>
+    <label>Id</label>
+    <input type="number" name="iddoctor" class="form-control" value="@Model.IdDoctor" />
+    <label>Apellido</label>
+    <input type="text" name="apellido" class="form-control" value="@Model.Apellido" />
+    <label>Especialidad</label>
+    <input type="text" name="especialidad" class="form-control" value="@Model.Especialidad" />
+    <label>Salario</label>
+    <input type="number" name="salario" class="form-control" value="@Model.Salario" />
+    <button class="btn btn-warning">Update Doctor</button>
+</form>
