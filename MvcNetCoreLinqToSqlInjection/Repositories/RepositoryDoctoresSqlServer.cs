@@ -126,7 +126,7 @@ namespace MvcNetCoreLinqToSqlInjection.Repositories
         public List<Doctor> BuscadorDoctores(string especilidad)
         {
             var consulta = from datos in this.tablaDoctor.AsEnumerable()
-                           where datos.Field<string>("ESPECIALIDAD") == especilidad
+                           where datos.Field<string>("ESPECIALIDAD").StartsWith(especilidad)
                            select datos;
             List<Doctor> doctores = new List<Doctor>();
             foreach (var row in consulta)
